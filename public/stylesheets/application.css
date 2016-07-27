@@ -1,0 +1,19 @@
+main {
+  margin: 0 auto;
+  display:table;
+}
+
+div {
+  border:1px solid black;
+}
+
+.trade-window {
+  width:400px;
+  min-height:600px;
+}
+.trade-window.left {
+  float:left;
+}
+.trade-window.right {
+  float:right;
+}

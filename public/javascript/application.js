@@ -1,55 +1,11 @@
 "use strict";
-String.prototype.replaceAll = function(search, replacement) {
-    var target = this;
-    return target.replace(new RegExp(search, 'g'), replacement);
-};
-
-function isValidValue(n) {
-  return !isNaN(parseFloat(n)) && isFinite(n) && (n >= 0);
-}
-
-function isValidQuantity(n) {
-  return Number.isInteger(n) && (n > 0);
-}
-
-function deepClone(obj) {
-  var copy;
-
-  // Handle the 3 simple types, and null or undefined
-  if (null == obj || "object" != typeof obj) return obj;
-
-  // Handle Date
-  if (obj instanceof Date) {
-    copy = new Date();
-    copy.setTime(obj.getTime());
-    return copy;
-  }
-
-  // Handle Array
-  if (obj instanceof Array) {
-    copy = [];
-    for (var i = 0, len = obj.length; i < len; i++) {
-      copy[i] = deepClone(obj[i]);
-    }
-    return copy;
-  }
-
-  // Handle Object
-  if (obj instanceof Object)
-  {
-    copy = {};
-    for (var attr in obj) {
-      if (obj.hasOwnProperty(attr)) copy[attr] = deepClone(obj[attr]);
-    }
-    return copy;
-  }
-
-  throw new Error("Unable to copy obj, its type or the type of objects it contains is not supported.");
-}
 
 $(document).ready(function() {
   var cardListItemTemplate = Handlebars.compile($("#card-template-advanced").html());
   var cardBinItemTemplate = Handlebars.compile($("#card-template").html());
+  // todo: read these from html
+  var jayaCurrentName = "Jaya"; var jayaFullName = "Jaya Ballard";
+  var squeeCurrentName = "Squee"; var squeeFullName = "Squee Nabob";
   var currentCards = [];
   var jayaCards = [];
   var squeeCards = [];
@@ -76,9 +32,29 @@ $(document).ready(function() {
     if ((!jQuery.isEmptyObject(card.formats)) && (card.editions.length > 0))
     {
       parseManacost(card);
+      parseType(card);
+      updateUserNames(card);
       card.editions[0].active = true;
-      $('#card-search-results').append(cardListItemTemplate(card));
+      var cardHTML = cardListItemTemplate(card);
+      $('#card-search-results').append(cardHTML);
     }
+  }
+
+  function updateUserNames(card)
+  {
+    card.jayaName = jayaCurrentName;
+    card.squeeName = squeeCurrentName;
+  }
+
+  function parseType(card)
+  {
+    var typeStr = "";
+    for (var i = 0; i < card.types.length; i++)
+    {
+      typeStr += card.types[i].capitalizeFirstLetter();
+      typeStr += " ";
+    }
+    card.type = typeStr.trimRight();
   }
 
   function parseEditions(card)
@@ -131,16 +107,39 @@ $(document).ready(function() {
       },
       dataType: 'json',
       success: function (data) {
-        // console.log("success!");
         currentCards = data;
         displayCards();
       }
     });
   });
 
+  $('.trade-window-header .title').on('focusout', function() {
+    var fullName = $(this).html().stripSpecialChars();
+    var newName = shortenName(fullName);
+    var whoFor = $(this).data("for");
+    if (whoFor === 'jaya') {
+      jayaCurrentName = newName;
+      jayaFullName = fullName;
+      $('.addButton-name-jaya').html(newName);
+    } else if (whoFor === 'squee') {
+      squeeCurrentName = newName;
+      squeeFullName = fullName;
+      $('.addButton-name-squee').html(newName);
+    }
+    $(this).html(fullName);
+  });
+
+  $('.trade-window-header .title').on('keydown', function(event) {  
+    if(event.keyCode == 13)
+    {
+      event.preventDefault();
+      $(this).blur();
+    }
+  });
+
   $('#card-search-results').on('click', ".set-selector", function() {
     var mid = $(this).data("id");
-    var cardElement = $(this).closest(".card")
+    var cardElement = $(this).closest(".card");
     var id = cardElement.data("id");
     var newCard = currentCards.find(x=> x.id === id);
     for (var i = 0; i < newCard.editions.length; i++)
@@ -154,12 +153,13 @@ $(document).ready(function() {
         newCard.editions[i].active = true;
       }
     }
+    updateUserNames(newCard);
     cardElement.replaceWith(cardListItemTemplate(newCard));
   });
 
   $('#card-search-results').on('click', '.addButton', function() {
     var characterFor = $(this).data('character');
-    var cardHolderElement = $(this).closest(".card")
+    var cardHolderElement = $(this).closest(".card");
     var id = cardHolderElement.data("id");
     var card = deepClone(currentCards.find(x=> x.id === id));
     var valid = true;

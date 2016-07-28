@@ -2,9 +2,19 @@
 <script id="card-template" type="text/x-handlebars-template">
   <li class="cardBin list-group-item" data-id="{{id}}">  
     <img class="card-image" src="{{#each editions}}{{#if active}}{{image_url}}{{/if}}{{/each}}">
-    <h1><span class="card-title">{{name}}</span>&nbsp;&nbsp;<span class="nobr">{{{cost}}}</span></h1>
+    <h1><span class="card-title">{{name}}</span>&nbsp;&nbsp;<span class="mana-cost nobr">{{{cost}}}</span></h1>
     <h4>{{quantity}}x valued at ${{value}}</h4>
-    <p> edit delete etc etc </p>
+    <button type="button" class="btn btn-default editCardButton">Edit</button>
+    <span class="cardBinForm" style="display:none">
+      <div class="input-group value-form">
+        <span class="input-group-addon">$</span>
+        <input type="number" class="form-control value-input" placeholder="value">
+      </div>
+      <div class="input-group quantity-form">
+        <span class="input-group-addon">x</span>
+        <input type="number" class="form-control quantity-input" placeholder="Quantity" value="1">
+      </div>
+    </span>
   </li>
 </script>
 
@@ -13,7 +23,7 @@
     <div class="row">
       <div class="col-md-8 left-holder">
         <img class="card-image" src="{{#each editions}}{{#if active}}{{image_url}}{{/if}}{{/each}}">
-        <h1><span class="card-title">{{name}}</span>&nbsp;&nbsp;<span class="nobr">{{{cost}}}</span></h1>
+        <h1><span class="card-title">{{name}}</span>&nbsp;&nbsp;<span class="mana-cost nobr">{{{cost}}}</span></h1>
         <p class="card-text">{{text}}</p>
       </div>
       <div class="col-md-4 right-holder">

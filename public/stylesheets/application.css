@@ -1,6 +1,6 @@
 
 
-.card h1 img {
+.mana-cost img {
   width:30px;
 }
 
@@ -9,8 +9,42 @@
   height:100px;
 }
 
+.trade-window {
+  width:50%;
+  min-height:500px;
+}
+.trade-window.left h3 {
+  margin-top:0;
+  float:left;
+}
+.trade-window.left .info {
+  float:right;
+}
+.trade-window.right h3 {
+  margin-top:0;
+  float:right;
+}
+.trade-window.right .info {
+  float:left;
+}
+.trade-window.left {
+  float:left;
+  border-right: 2px solid grey;
+}
+.trade-window.right {
+  float:right;
+  border-left: 2px solid grey;
+}
+.trade-window-header {
+  border-bottom:4px solid grey;
+}
+
 .card {
 
+}
+
+.panel-heading .title {
+  display:inline-block;
 }
 
 .card-title {
@@ -18,10 +52,6 @@
 }
 }
 .card-text {
-}
-
-.trade-window {
-  min-height: 600px;
 }
 
 #user-search-input {
@@ -32,10 +62,10 @@
   max-width:150px;
 }
 
-.trade-window {
-  border: 1px solid black;
-}
-
 .nobr {
   white-space: nowrap;
+}
+
+.clear {
+  clear:both;
 }

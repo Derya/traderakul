@@ -184,6 +184,8 @@ $(document).ready(function() {
       valid = false;
     }
 
+    card.totalVal = cardQuant * cardVal;
+
     if (!valid) return;
     if (characterFor === 'jaya') {
       jayaCards.push(card);

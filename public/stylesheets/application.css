@@ -1,14 +1,24 @@
 
-
-.mana-cost img {
+/*mana icons on search results*/
+.card .mana-cost img {
   width:30px;
 }
-
+/*mana icons on cards in user bins*/
+.cardBin .mana-cost img {
+  width:20px;
+}
+/*card image on search results*/
 .card-image {
   float:left;
   height:140px;
 }
+/*card image on user bins*/
+.card-image-bin {
+  height:100px;
+  float:left;
+}
 
+/* user bin stuff */
 .trade-window {
   width:50%;
   min-height:500px;
@@ -38,30 +48,29 @@
 .trade-window-header {
   border-bottom:4px solid grey;
 }
-
-.card {
-
-}
-
 .panel-heading .title {
   display:inline-block;
+}
+/* end user bin stuff */
+
+/* user input on search form results for quantity and value */
+.right-holder .input-group {
+  max-width:150px;
 }
 
 .card-title {
   /*TODO: ALT TEXT, LIMIT LENGTH WITH ...*/
 }
-}
 .card-text {
 }
 
+/* user search form */
 #user-search-input {
   max-width:200px;
 }
 
-.right-holder .input-group {
-  max-width:150px;
-}
 
+/* utility classes */
 .nobr {
   white-space: nowrap;
 }

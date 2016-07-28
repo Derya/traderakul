@@ -10,8 +10,7 @@
 }
 
 .card {
-  background-color:pink;
-  cursor:pointer;
+
 }
 
 .card-title {
@@ -27,6 +26,10 @@
 
 #user-search-input {
   max-width:200px;
+}
+
+.right-holder .input-group {
+  max-width:150px;
 }
 
 .trade-window {

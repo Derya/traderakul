@@ -1,18 +1,22 @@
-<h1>mtg trade app</h1>
+<%= erb :_hb_templates %>
 
-<main>
+<%= erb :_navbar %>
 
-  <div class="card-search-holder">
+<main class="container">
 
-    <input type="text">
-
+  <div class="form-group">
+    <label for="user-search-input">Enter a card:</label>
+    <input type="text" class="form-control" id="user-search-input">
   </div>
 
-  <div class="trade-holder">
-    <div class="trade-window left">
+  <ul class="card-search-results list-group">
+  </ul>
+
+  <div class="row">
+    <div class="trade-window left col-md-6">
       
     </div>
-    <div class="trade-window left">
+    <div class="trade-window right col-md-6">
       
     </div>
   </div>

@@ -1,19 +1,38 @@
-main {
-  margin: 0 auto;
-  display:table;
+
+
+.card h1 img {
+  width:30px;
 }
 
-div {
-  border:1px solid black;
+.card-image {
+  float:left;
+  height:100px;
+}
+
+.card {
+  background-color:pink;
+  cursor:pointer;
+}
+
+.card-title {
+  /*TODO: ALT TEXT, LIMIT LENGTH WITH ...*/
+}
+}
+.card-text {
 }
 
 .trade-window {
-  width:400px;
-  min-height:600px;
+  min-height: 600px;
 }
-.trade-window.left {
-  float:left;
+
+#user-search-input {
+  max-width:200px;
 }
-.trade-window.right {
-  float:right;
+
+.trade-window {
+  border: 1px solid black;
+}
+
+.nobr {
+  white-space: nowrap;
 }

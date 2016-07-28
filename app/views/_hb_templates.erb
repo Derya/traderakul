@@ -1,0 +1,30 @@
+
+<script id="card-template" type="text/x-handlebars-template">
+  <li class="card list-group-item" data-id="{{id}}">  
+    <img class="card-image" src="{{editions.[0].image_url}}">
+    <h1><span class="card-title">{{name}}</span>&nbsp;&nbsp;<span class="nobr">{{{cost}}}</span></h1>
+    <p class="card-text">{{text}}</p>
+  </li>
+</script>
+
+
+
+<script id="card-template-advanced" type="text/x-handlebars-template">
+  <li class="card list-group-item" data-id="{{id}}">
+    <div class="row">
+      <div class="col-md-6 container">
+        <img class="card-image" src="{{editions.[0].image_url}}">
+        <h1><span class="card-title">{{name}}</span>&nbsp;&nbsp;<span class="nobr">{{{cost}}}</span></h1>
+        <p class="card-text">{{text}}</p>
+      </div>
+      <div class="col-md-6 container">
+        <div class="btn-group" role="group" aria-label="...">
+          <button type="button" class="btn btn-default left">Add for Squee</button>
+          <button type="button" class="btn btn-default right">Add for Jaya</button>
+        </div>
+        <div>
+        </div>
+      </div>
+    </div>
+  </li>
+</script>

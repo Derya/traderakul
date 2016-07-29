@@ -87,15 +87,16 @@ $(document).ready(function() {
   function parseManacost(card)
   {
     card.cost = card.cost.replaceAll("/","");
+    // TODO: support for phyrexian mana
     card.cost = card.cost.replaceAll("P","");
+    // TODO: see if you can implement this in the template
     card.cost = card.cost.replaceAll("{", "<img src=\"img/");
     card.cost = card.cost.replaceAll("}", ".jpg\">");
   }
 
   $('#user-search-input').on('input', function() {
     var userInput = getVal($(this));
-    if (userInput.length < 3)
-    {
+    if (userInput.length < 3) {
       return;
     }
 
@@ -130,8 +131,7 @@ $(document).ready(function() {
   });
 
   $('.trade-window-header .title').on('keydown', function(event) {  
-    if(event.keyCode == 13)
-    {
+    if(event.keyCode == 13) {
       event.preventDefault();
       $(this).blur();
     }
@@ -155,6 +155,42 @@ $(document).ready(function() {
     }
     updateUserNames(newCard);
     cardElement.replaceWith(cardListItemTemplate(newCard));
+  });
+
+  var ALT_EDIT_BTN_TEXT = "Done";
+  var ORIG_EDIT_BTN_TEXT = "Edit";
+  $('.cardList').on('click', '.editCardButton', function() {
+    // find the card bin item this button was pushed from
+    var cardBinElement = $(this).closest('.cardBin');
+
+    // if we are already in edit mode and user pressed "done"
+    if ($(this).html() === ALT_EDIT_BTN_TEXT) {
+      // find the two forms
+      var valForm = cardBinElement.find('.value-input');
+      var quantForm = cardBinElement.find('.quantity-input');
+      var valid = true;
+
+      // find the card value from the card value form
+      var cardVal = parseFloat(valForm.val());
+      if (isValidValue(cardVal)) {
+        valForm.removeClass('has-error');
+        
+      } else {
+        valForm.addClass('has-error');
+        valid = false;
+      }
+
+      var cardQuant = parseFloat(quantForm.val());
+
+      if (blah) {
+        $(this).html(ORIG_EDIT_BTN_TEXT);
+        $(this).closest('.cardBin').find('.cardBinForm').toggle();
+      }
+
+    } else {
+      $(this).closest('.cardBin').find('.cardBinForm').toggle();
+      $(this).html(ALT_EDIT_BTN_TEXT);
+    }
   });
 
   $('#card-search-results').on('click', '.addButton', function() {
@@ -184,9 +220,10 @@ $(document).ready(function() {
       valid = false;
     }
 
-    card.totalVal = cardQuant * cardVal;
-
     if (!valid) return;
+
+    card.totalVal = "$" + Number(cardQuant * cardVal).toFixed(2);
+
     if (characterFor === 'jaya') {
       jayaCards.push(card);
       $('#jaya-list').append(cardBinItemTemplate(card));

@@ -10,11 +10,11 @@ String.prototype.stripSpecialChars = function() {
   res = res.replace(/(\n|\r|[^ a-zA-Z0-9])/g,'');
   res = res.replace(/ +/,' ');
   return res.trim();
-}
+};
 
 String.prototype.capitalizeFirstLetter = function() {
   return this.charAt(0).toUpperCase() + this.slice(1);
-}
+};
 
 function isValidValue(n) {
   return !isNaN(parseFloat(n)) && isFinite(n) && (n >= 0);

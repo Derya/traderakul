@@ -3,27 +3,21 @@
 $(document).ready(function() {
   var cardListItemTemplate = Handlebars.compile($("#card-template-advanced").html());
   var cardBinItemTemplate = Handlebars.compile($("#card-template").html());
-  // todo: read these from html
-  var jayaCurrentName = "Jaya"; var jayaFullName = "Jaya Ballard";
-  var squeeCurrentName = "Squee"; var squeeFullName = "Squee Nabob";
-  var currentCards = [];
-  var jayaCards = [];
-  var squeeCards = [];
+  // read names from html
+  var jayaFullName = $('.trade-window.left .title').html();
+  var squeeFullName = $('.trade-window.right .title').html();
+  var jayaCurrentName = shortenName(jayaFullName.stripSpecialChars());
+  var squeeCurrentName = shortenName(squeeFullName.stripSpecialChars());
+  var currentSearchCards = [];
+  var jayaCards = []; var jayaIndex = 0;
+  var squeeCards = []; var squeeIndex = 0;
 
-  function getVal(ele)
-  {
-    return ele.val();
-  }
+  function clearCards() { $('#card-search-results').empty(); }
 
   function displayCards()
   {
     clearCards();
-    currentCards.forEach(addCard);
-  }
-
-  function clearCards()
-  {
-    $('#card-search-results').empty();
+    currentSearchCards.forEach(addCard);
   }
 
   function addCard(card, index, array)
@@ -35,8 +29,7 @@ $(document).ready(function() {
       parseType(card);
       updateUserNames(card);
       card.editions[0].active = true;
-      var cardHTML = cardListItemTemplate(card);
-      $('#card-search-results').append(cardHTML);
+      $('#card-search-results').append(cardListItemTemplate(card));
     }
   }
 
@@ -69,33 +62,33 @@ $(document).ready(function() {
     }
   }
 
-  function updateTradeVals()
-  {
-    var squeeTotal = 0; var jayaTotal = 0;
-    for (var i = 0; i < squeeCards.length; i++)
-    {
-      squeeTotal += squeeCards[i].value * squeeCards[i].quantity;
-    }
-    for (var i = 0; i < jayaCards.length; i++)
-    {
-      jayaTotal += jayaCards[i].value * jayaCards[i].quantity;
-    }
-    $('#squee-total').html("$" + Number(squeeTotal).toFixed(2));
-    $('#jaya-total').html("$" + Number(jayaTotal).toFixed(2));
-  }
-
   function parseManacost(card)
   {
     card.cost = card.cost.replaceAll("/","");
-    // TODO: support for phyrexian mana
+    // TODO: add support for phyrexian mana
     card.cost = card.cost.replaceAll("P","");
-    // TODO: see if you can implement this in the template
+    // TODO: move this view logic to the template
     card.cost = card.cost.replaceAll("{", "<img src=\"img/");
     card.cost = card.cost.replaceAll("}", ".jpg\">");
   }
 
+  // function for updating trade vals, input is boolean true => update jaya's
+  // trade vals or false => update squee's trade vals
+  function updateTradeVals(jaya)
+  {
+    // TODO: change to update squee or jaya only
+    var squeeTotal = 0; var jayaTotal = 0;
+    for (var i = 0; i < squeeCards.length; i++)
+      squeeTotal += squeeCards[i].value * squeeCards[i].quantity;
+    for (var i = 0; i < jayaCards.length; i++)
+      jayaTotal += jayaCards[i].value * jayaCards[i].quantity;
+    $('#squee-total').html("$" + Number(squeeTotal).toFixed(2));
+    $('#jaya-total').html("$" + Number(jayaTotal).toFixed(2));
+  }
+
+  // functionality for using the search bar
   $('#user-search-input').on('input', function() {
-    var userInput = getVal($(this));
+    var userInput = $(this).val();
     if (userInput.length < 3) {
       return;
     }
@@ -108,12 +101,13 @@ $(document).ready(function() {
       },
       dataType: 'json',
       success: function (data) {
-        currentCards = data;
+        currentSearchCards = data;
         displayCards();
       }
     });
   });
 
+  // functionality for users changing their names
   $('.trade-window-header .title').on('focusout', function() {
     var fullName = $(this).html().stripSpecialChars();
     var newName = shortenName(fullName);
@@ -130,6 +124,7 @@ $(document).ready(function() {
     $(this).html(fullName);
   });
 
+  // making the name field lose focus when user presses enter
   $('.trade-window-header .title').on('keydown', function(event) {  
     if(event.keyCode == 13) {
       event.preventDefault();
@@ -137,11 +132,12 @@ $(document).ready(function() {
     }
   });
 
+  // functionality for switching the set version of cards in search results
   $('#card-search-results').on('click', ".set-selector", function() {
     var mid = $(this).data("id");
     var cardElement = $(this).closest(".card");
     var id = cardElement.data("id");
-    var newCard = currentCards.find(x=> x.id === id);
+    var newCard = currentSearchCards.find(x=> x.id === id);
     for (var i = 0; i < newCard.editions.length; i++)
     {
       if (newCard.editions[i].active)
@@ -157,6 +153,15 @@ $(document).ready(function() {
     cardElement.replaceWith(cardListItemTemplate(newCard));
   });
 
+  // hacking in this functionality to let enter work as button press for the 
+  // finished editing button on card bins, since it is not in an actual form
+  $('.cardList').on('keydown', '.cardBinForm input', function(event) { 
+    if(event.keyCode == 13) {
+      $(this).closest('.cardBin').find('.editCardButton').trigger('click');
+    }
+  });
+
+  // functionality for editing (val, quantity) cards in user bins
   var ALT_EDIT_BTN_TEXT = "Done";
   var ORIG_EDIT_BTN_TEXT = "Edit";
   $('.cardList').on('click', '.editCardButton', function() {
@@ -174,30 +179,60 @@ $(document).ready(function() {
       var cardVal = parseFloat(valForm.val());
       if (isValidValue(cardVal)) {
         valForm.removeClass('has-error');
-        
       } else {
         valForm.addClass('has-error');
         valid = false;
       }
 
+      // find the card quantity from the card quantity form
       var cardQuant = parseFloat(quantForm.val());
-
-      if (blah) {
-        $(this).html(ORIG_EDIT_BTN_TEXT);
-        $(this).closest('.cardBin').find('.cardBinForm').toggle();
+      if (isValidQuantity(cardQuant)) {
+        quantForm.removeClass('has-error');
+      } else {
+        quantForm.addClass('has-error');
+        valid = false;
       }
 
+      // if the inputs are valid, we are actually going to commit this data change
+      if (valid) {
+        // figure out if we are in jaya's or squee's list
+        var forJaya = ($(this).closest('.cardList.list-group').data('for')) == 'jaya';
+        // find the card in our array
+        var card;
+        if (forJaya)
+          card = $.grep(jayaCards, function(e){ return e.index == cardBinElement.data('index'); });
+        else
+          card = $.grep(squeeCards, function(e){ return e.index == cardBinElement.data('index'); });
+        card = card[0];
+        // set the new card value and quantity
+        card.value = cardVal;
+        card.quantity = cardQuant;
+        card.totalVal = "$" + Number(cardQuant * cardVal).toFixed(2);
+
+        // rebuild this card element
+        cardBinElement.replaceWith(cardBinItemTemplate(card));
+        // update trade vals
+        updateTradeVals(forJaya);
+      }
+    // else if we are not in edit mode, we enable edit mode
     } else {
       $(this).closest('.cardBin').find('.cardBinForm').toggle();
       $(this).html(ALT_EDIT_BTN_TEXT);
     }
   });
 
+  $('.cardList').on('click', '.cancelEditCardButton', function() {
+    // find the card bin item this button was pushed from
+    $(this).closest('.cardBin').find('.editCardButton').html(ORIG_EDIT_BTN_TEXT);
+    $(this).closest('.cardBin').find('.cardBinForm').toggle();
+  });
+
+  // functionality for adding cards to users' bins
   $('#card-search-results').on('click', '.addButton', function() {
     var characterFor = $(this).data('character');
     var cardHolderElement = $(this).closest(".card");
     var id = cardHolderElement.data("id");
-    var card = deepClone(currentCards.find(x=> x.id === id));
+    var card = deepClone(currentSearchCards.find(x=> x.id === id));
     var valid = true;
 
     var cardVal = parseFloat(cardHolderElement.find('.value-input').val());
@@ -225,15 +260,47 @@ $(document).ready(function() {
     card.totalVal = "$" + Number(cardQuant * cardVal).toFixed(2);
 
     if (characterFor === 'jaya') {
+      card.index = jayaIndex++;
       jayaCards.push(card);
       $('#jaya-list').append(cardBinItemTemplate(card));
-    } else if (characterFor === 'squee') {
+      updateTradeVals(true);
+    } else {
+      card.index = squeeIndex++;
       squeeCards.push(card);
       $('#squee-list').append(cardBinItemTemplate(card));
-    } else {
-      return;
+      updateTradeVals(false);
     }
-    updateTradeVals();
+  });
+
+  // functionality for removing cards from users' bins
+  var ALT_REMOVE_BTN_TXT = "Sure?";
+  $('.cardList').on('click', '.deleteCardButton', function() {
+    // find the card bin item this button is associated with
+    var cardBinElement = $(this).closest('.cardBin');
+
+    // see if we are past the "sure?" prompt
+    if ($(this).html() == ALT_REMOVE_BTN_TXT) {
+      // figure out if we are in jaya's or squee's list
+      var forJaya = ($(this).closest('.cardList.list-group').data('for')) == 'jaya';
+      // find the card in the relevant array and delete it
+      var arrayToSearch;
+      if (forJaya) arrayToSearch = jayaCards; else arrayToSearch = squeeCards;
+      for (var i = 0; i < arrayToSearch.length; i++) {
+        if (arrayToSearch[i].index === cardBinElement.data('index')) {
+          arrayToSearch.splice(i,1);
+          i--;
+        }
+      }
+      // remove this element entirely
+      cardBinElement.remove();
+      updateTradeVals(forJaya);
+    } else {
+      $(this).html(ALT_REMOVE_BTN_TXT)
+      setTimeout(function() {
+      // Do something after 4 seconds
+      }, 4000);
+
+    }
   });
   
 });

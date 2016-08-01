@@ -1,4 +1,4 @@
-<%= erb :_navbar %>
+<%= erb :_header %>
 
 <main class="container">
 
@@ -16,7 +16,7 @@
       <span class="info"><button>Clear</button><span id="jaya-total">$0.00</span></span>
       <div class="clear"></div>
     </div>
-    <ul class="cardList list-group" id="jaya-list" data-character="jaya">
+    <ul class="cardList list-group" id="jaya-list" data-for="jaya">
     </ul>
   </div>
 
@@ -26,7 +26,7 @@
       <span class="info"><span id="squee-total">$0.00</span><button>Clear</button></span>
       <div class="clear"></div>
     </div>
-    <ul class="cardList list-group" id="squee-list" data-character="jaya">
+    <ul class="cardList list-group" id="squee-list" data-for="squee">
     </ul>
   </div>
 

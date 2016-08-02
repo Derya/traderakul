@@ -17,7 +17,7 @@ $(document).ready(function() {
   var squeeCards = []; var squeeIndex = 0;
 
   // used to order our search's ajax requests
-  var searchReqIndex = 0;
+  var searchReqIndex = 0; var latestReturnedIndex = 0;
 
   function clearCards() {
     $('#card-search-results').empty();
@@ -255,7 +255,7 @@ $(document).ready(function() {
     // unhide search results
     $('#hide-search-results-button').html(ORIG_HIDE_BTN_TXT);
     $('#card-search-results').toggle(true);
-
+    searchReqIndex++;
     $.ajax({
       url: "https://api.deckbrew.com/mtg/cards/typeahead",
       method: 'get',
@@ -263,11 +263,13 @@ $(document).ready(function() {
         q: userInput
       },
       dataType: 'json',
-      success: function (data) {
-        console.log(searchReqIndex);
-        currentSearchCards = data;
-        displayCards();
-      }
+      success: debounce(function (data) {
+        if (this > latestReturnedIndex) {
+          latestReturnedIndex = this;
+          currentSearchCards = data;
+          displayCards();
+        }
+      }, 300).bind(searchReqIndex)
     });
   });
 

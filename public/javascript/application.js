@@ -16,6 +16,9 @@ $(document).ready(function() {
   var jayaCards = []; var jayaIndex = 0;
   var squeeCards = []; var squeeIndex = 0;
 
+  // used to order our search's ajax requests
+  var searchReqIndex = 0;
+
   function clearCards() {
     $('#card-search-results').empty();
   }
@@ -187,24 +190,26 @@ $(document).ready(function() {
     if ($(this).html() === ALT_EDIT_BTN_TEXT) {
       // find the two forms
       var valForm = cardBinElement.find('.value-input');
+      var valFormDiv = cardBinElement.find('.value-form');
       var quantForm = cardBinElement.find('.quantity-input');
+      var quantFormDiv = cardBinElement.find('.quantity-form');
       var valid = true;
 
       // find the card value from the card value form
       var cardVal = parseFloat(valForm.val());
       if (isValidValue(cardVal)) {
-        valForm.removeClass('has-error');
+        valFormDiv.removeClass('has-error');
       } else {
-        valForm.addClass('has-error');
+        valFormDiv.addClass('has-error');
         valid = false;
       }
 
       // find the card quantity from the card quantity form
       var cardQuant = parseFloat(quantForm.val());
       if (isValidQuantity(cardQuant)) {
-        quantForm.removeClass('has-error');
+        quantFormDiv.removeClass('has-error');
       } else {
-        quantForm.addClass('has-error');
+        quantFormDiv.addClass('has-error');
         valid = false;
       }
 
@@ -259,6 +264,7 @@ $(document).ready(function() {
       },
       dataType: 'json',
       success: function (data) {
+        console.log(searchReqIndex);
         currentSearchCards = data;
         displayCards();
       }
@@ -359,10 +365,15 @@ $(document).ready(function() {
   var ALT_CLEAR_BTN_TXT = "Sure?";
   var ORIG_CLEAR_BTN_TXT = "Clear";
   $('.clearBinButton').on('click', function() {
+    // find out if we are button for jaya or for squee
+    var forJaya = $(this).closest('.trade-window.left').data('for') == "jaya";
+
+    // do nothing if the bin is empty
+    if (forJaya && jayaCards.length === 0) return;
+    if (!forJaya && squeeCards.length === 0) return;
+
     // check if we are past the "sure?" prompt
     if ($(this).html() == ALT_CLEAR_BTN_TXT) {
-      // find out if we are button for jaya or for squee
-      var forJaya = $(this).closest('.trade-window.left').data('for') == "jaya";
       // clear the list
       if (forJaya) {
         $('#jaya-list').empty();
@@ -394,6 +405,3 @@ $(document).ready(function() {
   });
   
 });
-
-// TODO: binding on search results
-// TODO: errors on input form for editing cards

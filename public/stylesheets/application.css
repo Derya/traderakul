@@ -39,6 +39,9 @@
 }
 .cardBin .card-title {
   font-weight:bold;
+  font-size:1.2em;
+}
+.cardBin .card-total {
 }
 /* margin on clear button for the two trade bins */
 .trade-window.left .info {
@@ -84,6 +87,7 @@
 }
 .cardBin .cardBinForm {
   max-width:120px;
+  margin-top:5px;
 }
 /* end user bin stuff */
 

@@ -395,3 +395,5 @@ $(document).ready(function() {
   
 });
 
+// TODO: binding on search results
+// TODO: errors on input form for editing cards

@@ -1,3 +1,16 @@
+@media (min-width: 768px) {
+}
+
+/* card search list holder */
+.left-holder > * {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+/* wrapper for main contents of page */
+#mainWrap {
+  max-width:1028px;
+}
 
 /*mana icons on search results*/
 .card .mana-cost img {
@@ -6,11 +19,6 @@
 /*mana icons on cards in user bins*/
 .cardBin .mana-cost img {
   width:20px;
-}
-/*card image on search results*/
-.card-image {
-  float:left;
-  height:140px;
 }
 /*card image on user bins*/
 .card-image-bin {
@@ -70,8 +78,15 @@
 }
 
 /* header stuff */
-.navbar-brand {
+#navbarbrand a{
+  font-size:34px;
+  text-decoration: none;
+  color: #331400;
+}
 
+#navbarbrand a:hover{
+  text-decoration: none;
+  color: #331400;
 }
 /* end header stuff */
 

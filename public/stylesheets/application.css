@@ -1,6 +1,13 @@
 @media (min-width: 768px) {
 }
 
+#search-bar-holder {
+  max-width:360px;
+  margin-bottom: 10px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 /* card search list holder */
 .left-holder > * {
   margin-top: 10px;
@@ -70,11 +77,6 @@
   /*TODO: ALT TEXT, LIMIT LENGTH WITH ...*/
 }
 .card-text {
-}
-
-/* user search form */
-#user-search-input {
-  max-width:200px;
 }
 
 /* header stuff */

@@ -3,9 +3,14 @@
 <div class="row">
   <main id="mainWrap" class="container-fluid">
 
-    <div class="input-group input-group-lg">
-      <span class="input-group-addon" id="sizing-addon1">Card:</span>
-      <input type="text" class="form-control" id="user-search-input" placeholder="Lightning bolt">
+    <div id="search-bar-holder">
+      <div class="input-group input-group-lg" id="card-search-input">
+        <span class="input-group-addon" id="sizing-addon1">Card:</span>
+        <input type="text" class="form-control" id="user-search-input" placeholder="Lightning bolt">
+        <span class="input-group-btn">
+          <button class="btn btn-default" type="button">Hide</button>
+        </span>
+      </div>
     </div>
 
     <ul id="card-search-results" class="list-group">

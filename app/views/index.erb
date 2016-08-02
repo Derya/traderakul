@@ -20,8 +20,8 @@
       <div class="trade-window-header">
         <h3 class="title" data-for="jaya" contenteditable="true">Jaya Ballard</h3>
         <span class="info nobr h3">
-          <span id="jaya-balance"></span>
-          \ $<span id="jaya-total">0.00</span> total
+          <span id="jaya-balance"></span> |
+          $<span id="jaya-total">0.00</span> total
           <button class="btn btn-default clearBinButton">Clear</button>
         </span>
         <div class="clear"></div>
@@ -35,7 +35,7 @@
         <h3 class="title" data-for="squee" contenteditable="true">Squee Nabob</h3>
         <span class="info nobr h3">
           <button class="btn btn-default clearBinButton">Clear</button>
-          $<span id="squee-total">0.00</span> total /
+          $<span id="squee-total">0.00</span> total |
           <span id="squee-balance"></span>
         </span>
         <div class="clear"></div>
@@ -47,4 +47,12 @@
   </main>
 </div>
 
-<%= erb :_hb_templates %>
+<!-- template for user bin cards -->
+<script id="card-template" type="text/x-handlebars-template">
+  <%= erb :_user_bin_handlebars_template %>
+</script>
+
+<!-- template for search result cards -->
+<script id="card-template-advanced" type="text/x-handlebars-template">
+  <%= erb :_search_entry_handlebars_template %>
+</script>

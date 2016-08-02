@@ -1,0 +1,49 @@
+
+<li class="card list-group-item" data-id="{{id}}">
+  <div class="row">
+    <div class="col-xs-4 col-sm-3 col-md-2 card-image-holder" >
+      <img class="card-image img-responsive" src="{{#each editions}}{{#if active}}{{image_url}}{{/if}}{{/each}}">
+    </div>
+    <div class="col-xs-8 col-sm-9 col-md-10">
+      <div class="col-md-8 col-xs-12 left-holder">
+        <h1><span class="card-title">{{name}}</span>&nbsp;&nbsp;<span class="mana-cost nobr">{{{cost}}}</span></h1>
+        <h4>{{type}}</h4>
+        <p class="card-text">{{text}}</p>
+        <div class="btn-group">
+          <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Editions <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu">
+            {{#each editions}}
+              {{#if active}}
+                <li><a href="#/">{{set}}</a></li>
+              {{/if}}
+            {{/each}}
+            <li role="separator" class="divider"></li>
+            {{#each editions}}
+              {{#unless active}}
+                <li class="set-selector" data-id="{{multiverse_id}}"><a href="#/">{{set}}</a></li>
+              {{/unless}}
+            {{/each}}
+          </ul>
+        </div>
+      </div>
+      <div class="col-md-4 col-xs-12 right-holder">
+        <div class="input-group value-form">
+          <span class="input-group-addon">$</span>
+          <input type="number" class="form-control value-input" placeholder="value">
+        </div>
+        <div class="input-group quantity-form">
+          <span class="input-group-addon">x</span>
+          <input type="number" class="form-control quantity-input" placeholder="Quantity" value="1">
+        </div>
+        <br>
+        <div class="btn-group">
+          <button type="button" class="btn btn-default addButton" data-character="jaya">Add to <span class="addButton-name-jaya" spellcheck="false" data-for="jaya">{{jayaName}}</span></button>
+          <button type="button" class="btn btn-default addButton" data-character="squee">Add to <span class="addButton-name-squee" spellcheck="false" data-for="squee">{{squeeName}}</span></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</li>
+

@@ -1,0 +1,36 @@
+
+<li class="cardBin list-group-item" data-id="{{id}}" data-index="{{index}}">
+  <div class="row">
+    <div class="col-xs-4">
+      <img class="card-image-bin img-responsive" src="{{#each editions}}{{#if active}}{{image_url}}{{/if}}{{/each}}">
+    </div>
+    <div class="col-xs-8">
+      <ul class="list-unstyled">
+        <li>
+          <span class="card-title">{{name}}</span>&nbsp;&nbsp;<span class="mana-cost nobr">{{{cost}}}</span>
+        </li>
+        <li>
+          {{#each editions}}{{#if active}}{{set}}  ({{rarity}}){{/if}}{{/each}}
+        </li>
+        <li>
+          {{quantity}}x valued at ${{valPrint}}, <strong class="card-total">{{totalVal}} total</strong>
+        </li>
+        <li>
+          <button type="button" class="btn-sm btn btn-default editCardButton">Edit</button>
+          <button type="button" class="btn-sm btn btn-default cancelEditCardButton" style="display:none">Cancel</button>
+          <button type="button" class="btn-sm btn btn-default deleteCardButton">Remove</button>
+        </li>
+        <li class="cardBinForm" style="display:none">
+          <div class="input-group value-form">
+            <span class="input-group-addon">$</span>
+            <input type="number" class="form-control value-input" value="{{value}}">
+          </div>
+          <div class="input-group quantity-form">
+            <span class="input-group-addon">x</span>
+            <input type="number" class="form-control quantity-input" value="{{quantity}}">
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</li>

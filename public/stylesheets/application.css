@@ -1,6 +1,7 @@
 @media (min-width: 768px) {
 }
 
+/* search bar */
 #search-bar-holder {
   max-width:360px;
   margin-bottom: 10px;
@@ -29,7 +30,7 @@
 }
 /*card image on user bins*/
 .card-image-bin {
-  height:100px;
+  height:120px;
   float:left;
 }
 
@@ -38,15 +39,23 @@
   width:50%;
   min-height:500px;
 }
+/* margin on clear button for the two trade bins */
+.trade-window.left .info {
+  margin-right:10px;
+}
+.trade-window.right .info {
+  margin-left:10px;
+}
+/* other styling for headers on trade bins */
+.trade-window .info {
+}
 .trade-window.left h3 {
-  margin-top:0;
   float:left;
 }
 .trade-window.left .info {
   float:right;
 }
 .trade-window.right h3 {
-  margin-top:0;
   float:right;
 }
 .trade-window.right .info {
@@ -63,6 +72,12 @@
 .trade-window-header {
   border-bottom:4px solid grey;
 }
+.trade-window-header > * {
+    margin-bottom:5px;
+}
+.trade-window-header button {
+  margin-top: -5px;
+}
 .panel-heading .title {
   display:inline-block;
 }
@@ -74,7 +89,7 @@
 }
 
 .card-title {
-  /*TODO: ALT TEXT, LIMIT LENGTH WITH ...*/
+  /*TODO: limit length, set alt text in html with javascript */
 }
 .card-text {
 }

@@ -236,6 +236,7 @@ $(document).ready(function() {
         card = card[0];
         // set the new card value and quantity
         card.value = cardVal;
+        card.valPrint = Number(cardVal).toFixed(2);
         card.quantity = cardQuant;
         card.totalVal = "$" + Number(cardQuant * cardVal).toFixed(2);
 
@@ -296,6 +297,7 @@ $(document).ready(function() {
     {
       cardHolderElement.find('.value-form').removeClass('has-error');
       card.value = cardVal;
+      card.valPrint = Number(cardVal).toFixed(2);
     } else {
       cardHolderElement.find('.value-form').addClass('has-error');
       valid = false;

@@ -1,25 +1,37 @@
 
 <script id="card-template" type="text/x-handlebars-template">
-  <li class="cardBin list-group-item" data-id="{{id}}" data-index="{{index}}">  
-    <img class="card-image-bin" src="{{#each editions}}{{#if active}}{{image_url}}{{/if}}{{/each}}">
-    <h3><span class="card-title">{{name}}</span>&nbsp;&nbsp;<span class="mana-cost nobr">{{{cost}}}</span></h3>
-    <h4>{{#each editions}}{{#if active}}{{set}}  ({{rarity}}){{/if}}{{/each}}</h4>
-    <h4>{{quantity}}x valued at ${{value}}, {{totalVal}} total</h4>
-    <button type="button" class="btn btn-danger deleteCardButton">Remove</button>
-    <button type="button" class="btn btn-default editCardButton">Edit</button>
-    <span class="cardBinForm" style="display:none">
-      <button type="button" class="btn btn-default cancelEditCardButton">Cancel</button>
-      <div class="input-group value-form">
-        <span class="input-group-addon">$</span>
-        <input type="number" class="form-control value-input" value="{{value}}">
-      </div>
-      <div class="input-group quantity-form">
-        <span class="input-group-addon">x</span>
-        <input type="number" class="form-control quantity-input" value="{{quantity}}">
-      </div>
-    </span>
+  <li class="cardBin list-group-item" data-id="{{id}}" data-index="{{index}}">
+    <ul>
+      <li>
+        <span class="card-title">{{name}}</span>&nbsp;&nbsp;<span class="mana-cost nobr">{{{cost}}}</span>
+      </li>
+      <li>
+        {{#each editions}}{{#if active}}{{set}}  ({{rarity}}){{/if}}{{/each}}
+      </li>
+      <li>
+        {{quantity}}x valued at ${{valPrint}}, {{totalVal}} total
+      </li>
+      <li>
+        <button type="button" class="btn btn-danger deleteCardButton">Remove</button>
+        <button type="button" class="btn btn-default editCardButton">Edit</button>
+        <button type="button" class="btn btn-default cancelEditCardButton">Cancel</button>
+      </li>
+      <li class="cardBinForm" style="display:none">
+        <div class="input-group value-form">
+          <span class="input-group-addon">$</span>
+          <input type="number" class="form-control value-input" value="{{value}}">
+        </div>
+        <div class="input-group quantity-form">
+          <span class="input-group-addon">x</span>
+          <input type="number" class="form-control quantity-input" value="{{quantity}}">
+        </div>
+      </li>
+    </ul>
   </li>
 </script>
+
+    <img class="card-image-bin" src="{{#each editions}}{{#if active}}{{image_url}}{{/if}}{{/each}}">
+
 
 <script id="card-template-advanced" type="text/x-handlebars-template">
   <li class="card list-group-item" data-id="{{id}}">

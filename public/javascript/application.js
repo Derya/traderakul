@@ -175,8 +175,11 @@ $(document).ready(function() {
   var ORIG_HIDE_BTN_TXT = "Hide";
   var ALT_HIDE_BTN_TXT = "Unhide";
   $('#hide-search-results-button').on('click', function() {
-    $('#card-search-results').toggle();
-    ($(this).html() == ORIG_HIDE_BTN_TXT) ? $(this).html(ALT_HIDE_BTN_TXT) : $(this).html(ORIG_HIDE_BTN_TXT);
+    // only run if the search input is not empty
+    if ($('#user-search-input').val()) {
+      $('#card-search-results').toggle();
+      ($(this).html() == ORIG_HIDE_BTN_TXT) ? $(this).html(ALT_HIDE_BTN_TXT) : $(this).html(ORIG_HIDE_BTN_TXT);
+    }
   });
 
   // functionality for editing (val, quantity) cards in user bins

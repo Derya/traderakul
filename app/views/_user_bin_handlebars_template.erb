@@ -10,7 +10,7 @@
           <span class="card-title">{{name}}</span>&nbsp;&nbsp;<span class="mana-cost nobr">{{{cost}}}</span>
         </li>
         <li>
-          {{#each editions}}{{#if active}}{{set}}  ({{rarity}}){{/if}}{{/each}}
+          {{#each editions}}{{#if active}}{{set}} ({{rarity}}){{/if}}{{/each}}
         </li>
         <li>
           {{quantity}}x valued at ${{valPrint}}, <strong class="card-total">{{totalVal}} total</strong>

@@ -168,21 +168,6 @@ $(document).ready(function() {
     }
   });
 
-  // functionality for clearing one of the bins
-  $('.clearBinButton').on('click', function() {
-    var forJaya = $(this).closest('.trade-window.left').data('for') == "jaya";
-    if (forJaya) {
-      $('#jaya-list').empty();
-      jayaCards.length = 0;
-      jayaIndex = 0;
-    } else {
-      $('#squee-list').empty();
-      squeeCards.length = 0;
-      squeeIndex = 0;
-    }
-    updateTradeVals(forJaya);
-  });
-
   // functionality for the hide search results button
   var ORIG_HIDE_BTN_TXT = "Hide";
   var ALT_HIDE_BTN_TXT = "Unhide";
@@ -247,8 +232,10 @@ $(document).ready(function() {
       }
     // else if we are not in edit mode, we enable edit mode
     } else {
-      $(this).closest('.cardBin').find('.cardBinForm').toggle();
+      // TODO: use cardBinElement var below::::
+      cardBinElement.find('.cardBinForm').toggle();
       $(this).html(ALT_EDIT_BTN_TEXT);
+      cardBinElement.find('.cancelEditCardButton').toggle();
     }
   });
 
@@ -281,7 +268,10 @@ $(document).ready(function() {
   $('.cardList').on('click', '.cancelEditCardButton', function() {
     // find the card bin item this button was pushed from
     $(this).closest('.cardBin').find('.editCardButton').html(ORIG_EDIT_BTN_TEXT);
-    $(this).closest('.cardBin').find('.cardBinForm').toggle();
+    // toggle off the form
+    $(this).closest('.cardBin').find('.cardBinForm').toggle(false);
+    // toggle off this button
+    $(this).toggle(false);
   });
 
   // functionality for adding cards to users' bins
@@ -332,6 +322,7 @@ $(document).ready(function() {
 
   // functionality for removing cards from users' bins
   var ALT_REMOVE_BTN_TXT = "Sure?";
+  var ORIG_REMOVE_BTN_TXT = "Remove";
   $('.cardList').on('click', '.deleteCardButton', function() {
     // find the card bin item this button is associated with
     var cardBinElement = $(this).closest('.cardBin');
@@ -353,13 +344,54 @@ $(document).ready(function() {
       cardBinElement.remove();
       updateTradeVals(forJaya);
     } else {
+      $(this).removeClass('btn-default');
+      $(this).addClass('btn-danger');
       $(this).html(ALT_REMOVE_BTN_TXT)
       setTimeout(function() {
-      // TODO: switch the button back
-      }, 4000);
+        this.addClass('btn-default');
+        this.removeClass('btn-danger');
+        this.html(ORIG_REMOVE_BTN_TXT);
+      }.bind($(this)), 3000);
     }
   });
 
+  // functionality for clearing one of the bins
+  var ALT_CLEAR_BTN_TXT = "Sure?";
+  var ORIG_CLEAR_BTN_TXT = "Clear";
+  $('.clearBinButton').on('click', function() {
+    // check if we are past the "sure?" prompt
+    if ($(this).html() == ALT_CLEAR_BTN_TXT) {
+      // find out if we are button for jaya or for squee
+      var forJaya = $(this).closest('.trade-window.left').data('for') == "jaya";
+      // clear the list
+      if (forJaya) {
+        $('#jaya-list').empty();
+        jayaCards.length = 0;
+        jayaIndex = 0;
+      } else {
+        $('#squee-list').empty();
+        squeeCards.length = 0;
+        squeeIndex = 0;
+      }
+      // clear the trade value
+      updateTradeVals(forJaya);
+      // reset this button
+      $(this).addClass('btn-default');
+      $(this).removeClass('btn-danger');
+      $(this).html(ORIG_CLEAR_BTN_TXT);
+    }
+    // otherwise we just switch to prompt version of this button for 3 seconds
+    else {
+      $(this).removeClass('btn-default');
+      $(this).addClass('btn-danger');
+      $(this).html(ALT_CLEAR_BTN_TXT)
+      setTimeout(function() {
+        this.addClass('btn-default');
+        this.removeClass('btn-danger');
+        this.html(ORIG_CLEAR_BTN_TXT);
+      }.bind($(this)), 3000);
+    }
+  });
   
 });
 

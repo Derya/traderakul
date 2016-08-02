@@ -3,7 +3,7 @@
 
 /* search bar */
 #search-bar-holder {
-  max-width:360px;
+  max-width:330px;
   margin-bottom: 10px;
   margin-left: auto;
   margin-right: auto;
@@ -28,16 +28,17 @@
 .cardBin .mana-cost img {
   width:20px;
 }
-/*card image on user bins*/
-.card-image-bin {
-  height:120px;
-  float:left;
-}
 
 /* user bin stuff */
 .trade-window {
   width:50%;
   min-height:500px;
+}
+.card-image-bin {
+  max-height:100px;
+}
+.cardBin .card-title {
+  font-weight:bold;
 }
 /* margin on clear button for the two trade bins */
 .trade-window.left .info {
@@ -81,11 +82,14 @@
 .panel-heading .title {
   display:inline-block;
 }
+.cardBin .cardBinForm {
+  max-width:120px;
+}
 /* end user bin stuff */
 
 /* user input on search form results for quantity and value */
 .right-holder .input-group {
-  max-width:150px;
+  max-width:120px;
 }
 
 .card-title {

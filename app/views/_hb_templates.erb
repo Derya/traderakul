@@ -1,38 +1,43 @@
-
+<!-- template for user bin cards -->
 <script id="card-template" type="text/x-handlebars-template">
   <li class="cardBin list-group-item" data-id="{{id}}" data-index="{{index}}">
-    <ul>
-      <li>
-        <span class="card-title">{{name}}</span>&nbsp;&nbsp;<span class="mana-cost nobr">{{{cost}}}</span>
-      </li>
-      <li>
-        {{#each editions}}{{#if active}}{{set}}  ({{rarity}}){{/if}}{{/each}}
-      </li>
-      <li>
-        {{quantity}}x valued at ${{valPrint}}, {{totalVal}} total
-      </li>
-      <li>
-        <button type="button" class="btn btn-danger deleteCardButton">Remove</button>
-        <button type="button" class="btn btn-default editCardButton">Edit</button>
-        <button type="button" class="btn btn-default cancelEditCardButton">Cancel</button>
-      </li>
-      <li class="cardBinForm" style="display:none">
-        <div class="input-group value-form">
-          <span class="input-group-addon">$</span>
-          <input type="number" class="form-control value-input" value="{{value}}">
-        </div>
-        <div class="input-group quantity-form">
-          <span class="input-group-addon">x</span>
-          <input type="number" class="form-control quantity-input" value="{{quantity}}">
-        </div>
-      </li>
-    </ul>
+    <div class="row">
+      <div class="col-xs-4">
+        <img class="card-image-bin img-responsive" src="{{#each editions}}{{#if active}}{{image_url}}{{/if}}{{/each}}">
+      </div>
+      <div class="col-xs-8">
+        <ul class="list-unstyled">
+          <li>
+            <span class="card-title">{{name}}</span>&nbsp;&nbsp;<span class="mana-cost nobr">{{{cost}}}</span>
+          </li>
+          <li>
+            {{#each editions}}{{#if active}}{{set}}  ({{rarity}}){{/if}}{{/each}}
+          </li>
+          <li>
+            {{quantity}}x valued at ${{valPrint}}, {{totalVal}} total
+          </li>
+          <li>
+            <button type="button" class="btn btn-default deleteCardButton">Remove</button>
+            <button type="button" class="btn btn-default editCardButton">Edit</button>
+            <button type="button" class="btn btn-default cancelEditCardButton" style="display:none">Cancel</button>
+          </li>
+          <li class="cardBinForm" style="display:none">
+            <div class="input-group value-form">
+              <span class="input-group-addon">$</span>
+              <input type="number" class="form-control value-input" value="{{value}}">
+            </div>
+            <div class="input-group quantity-form">
+              <span class="input-group-addon">x</span>
+              <input type="number" class="form-control quantity-input" value="{{quantity}}">
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
   </li>
 </script>
 
-    <img class="card-image-bin" src="{{#each editions}}{{#if active}}{{image_url}}{{/if}}{{/each}}">
-
-
+<!-- template for search result cards -->
 <script id="card-template-advanced" type="text/x-handlebars-template">
   <li class="card list-group-item" data-id="{{id}}">
     <div class="row">

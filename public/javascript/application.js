@@ -82,14 +82,38 @@ $(document).ready(function() {
   // trade vals or false => update squee's trade vals
   function updateTradeVals(jaya)
   {
-    // TODO: change to update squee or jaya only
+    // TODO: change to be dry, update squee or jaya only instead of repeating all code twice
     var squeeTotal = 0; var jayaTotal = 0;
     for (var i = 0; i < squeeCards.length; i++)
       squeeTotal += squeeCards[i].value * squeeCards[i].quantity;
     for (var i = 0; i < jayaCards.length; i++)
       jayaTotal += jayaCards[i].value * jayaCards[i].quantity;
-    $('#squee-total').html("$" + Number(squeeTotal).toFixed(2));
-    $('#jaya-total').html("$" + Number(jayaTotal).toFixed(2));
+    $('#squee-total').html(Number(squeeTotal).toFixed(2));
+    $('#jaya-total').html(Number(jayaTotal).toFixed(2));
+
+    // we need to also update the relative quantities
+    var squeeBalance = squeeTotal - jayaTotal;
+    var jayaBalance = jayaTotal - squeeTotal;
+    var squeeString = "$" + Number(Math.abs(squeeBalance)).toFixed(2);
+    var jayaString = "$" + Number(Math.abs(jayaBalance)).toFixed(2);
+    // TODO: consider refactoring all this view logic into a handlebar template?
+    if (squeeBalance < 0) {
+      squeeString = "-" + squeeString;
+      $('#squee-balance').css('color','red');
+    } else {
+      squeeString = "+" + squeeString;
+      $('#squee-balance').css('color','green');
+    }
+    if (jayaBalance < 0) {
+      jayaString = "-" + jayaString;
+      $('#jaya-balance').css('color','red');
+    } else {
+      jayaString = "+" + jayaString;
+      $('#jaya-balance').css('color','green');
+    }
+
+    $('#squee-balance').html(squeeString);
+    $('#jaya-balance').html(jayaString);
   }
 
   // functionality for users changing their names

@@ -140,12 +140,9 @@ $(document).ready(function() {
     var newCard = currentSearchCards.find(x=> x.id === id);
     for (var i = 0; i < newCard.editions.length; i++)
     {
-      if (newCard.editions[i].active)
-      {
+      if (newCard.editions[i].active) {
         delete newCard.editions[i].active;
-      }
-      else if (newCard.editions[i].multiverse_id == mid)
-      {
+      } else if (newCard.editions[i].multiverse_id == mid) {
         newCard.editions[i].active = true;
       }
     }
@@ -312,7 +309,7 @@ $(document).ready(function() {
     } else {
       $(this).html(ALT_REMOVE_BTN_TXT)
       setTimeout(function() {
-      // Do something after 4 seconds
+      // TODO: switch the button back
       }, 4000);
 
     }

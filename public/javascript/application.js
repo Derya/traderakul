@@ -1,18 +1,24 @@
 "use strict";
 
 $(document).ready(function() {
+  // compile handlebars templates
   var cardListItemTemplate = Handlebars.compile($("#card-template-advanced").html());
   var cardBinItemTemplate = Handlebars.compile($("#card-template").html());
+
   // read names from html
   var jayaFullName = $('.trade-window.left .title').html();
   var squeeFullName = $('.trade-window.right .title').html();
   var jayaCurrentName = shortenName(jayaFullName.stripSpecialChars());
   var squeeCurrentName = shortenName(squeeFullName.stripSpecialChars());
+
+  // initialize card arrays
   var currentSearchCards = [];
   var jayaCards = []; var jayaIndex = 0;
   var squeeCards = []; var squeeIndex = 0;
 
-  function clearCards() { $('#card-search-results').empty(); }
+  function clearCards() {
+    $('#card-search-results').empty();
+  }
 
   function displayCards()
   {
@@ -86,27 +92,6 @@ $(document).ready(function() {
     $('#jaya-total').html("$" + Number(jayaTotal).toFixed(2));
   }
 
-  // functionality for using the search bar
-  $('#user-search-input').on('input', function() {
-    var userInput = $(this).val();
-    if (userInput.length < 3) {
-      return;
-    }
-
-    $.ajax({
-      url: "https://api.deckbrew.com/mtg/cards/typeahead",
-      method: 'get',
-      data: {
-        q: userInput
-      },
-      dataType: 'json',
-      success: function (data) {
-        currentSearchCards = data;
-        displayCards();
-      }
-    });
-  });
-
   // functionality for users changing their names
   $('.trade-window-header .title').on('focusout', function() {
     var fullName = $(this).html().stripSpecialChars();
@@ -127,6 +112,7 @@ $(document).ready(function() {
   // making the name field lose focus when user presses enter
   $('.trade-window-header .title').on('keydown', function(event) {  
     if(event.keyCode == 13) {
+      // prevent the enter from registering as well
       event.preventDefault();
       $(this).blur();
     }
@@ -171,6 +157,14 @@ $(document).ready(function() {
       squeeIndex = 0;
     }
     updateTradeVals(forJaya);
+  });
+
+  // functionality for the hide search results button
+  var ORIG_HIDE_BTN_TXT = "Hide";
+  var ALT_HIDE_BTN_TXT = "Unhide";
+  $('#hide-search-results-button').on('click', function() {
+    $('#card-search-results').toggle();
+    ($(this).html() == ORIG_HIDE_BTN_TXT) ? $(this).html(ALT_HIDE_BTN_TXT) : $(this).html(ORIG_HIDE_BTN_TXT);
   });
 
   // functionality for editing (val, quantity) cards in user bins
@@ -231,6 +225,32 @@ $(document).ready(function() {
       $(this).closest('.cardBin').find('.cardBinForm').toggle();
       $(this).html(ALT_EDIT_BTN_TEXT);
     }
+  });
+
+  // functionality for using the search bar
+  $('#user-search-input').on('input', function() {
+    var userInput = $(this).val();
+    if (userInput.length < 3) {
+      clearCards();
+      return;
+    }
+
+    // unhide search results
+    $('#hide-search-results-button').html(ORIG_HIDE_BTN_TXT);
+    $('#card-search-results').toggle(true);
+
+    $.ajax({
+      url: "https://api.deckbrew.com/mtg/cards/typeahead",
+      method: 'get',
+      data: {
+        q: userInput
+      },
+      dataType: 'json',
+      success: function (data) {
+        currentSearchCards = data;
+        displayCards();
+      }
+    });
   });
 
   $('.cardList').on('click', '.cancelEditCardButton', function() {
@@ -311,9 +331,9 @@ $(document).ready(function() {
       setTimeout(function() {
       // TODO: switch the button back
       }, 4000);
-
     }
   });
+
   
 });
 

@@ -161,6 +161,21 @@ $(document).ready(function() {
     }
   });
 
+  // functionality for clearing one of the bins
+  $('.clearBinButton').on('click', function() {
+    var forJaya = $(this).closest('.trade-window.left').data('for') == "jaya";
+    if (forJaya) {
+      $('#jaya-list').empty();
+      jayaCards.length = 0;
+      jayaIndex = 0;
+    } else {
+      $('#squee-list').empty();
+      squeeCards.length = 0;
+      squeeIndex = 0;
+    }
+    updateTradeVals(forJaya);
+  });
+
   // functionality for editing (val, quantity) cards in user bins
   var ALT_EDIT_BTN_TEXT = "Done";
   var ORIG_EDIT_BTN_TEXT = "Edit";

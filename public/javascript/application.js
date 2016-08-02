@@ -249,6 +249,7 @@ $(document).ready(function() {
     var userInput = $(this).val();
     if (userInput.length < 3) {
       clearCards();
+      $('#hide-search-results-button').html(ORIG_HIDE_BTN_TXT);
       return;
     }
 

@@ -69,6 +69,11 @@
   max-width:200px;
 }
 
+/* header stuff */
+.navbar-brand {
+
+}
+/* end header stuff */
 
 /* utility classes */
 .nobr {
@@ -78,9 +83,3 @@
 .clear {
   clear:both;
 }
-
-/* header stuff */
-.navbar-brand{
-
-}
-/* end header stuff */

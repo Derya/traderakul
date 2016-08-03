@@ -1,3 +1,5 @@
+By (Derya Aydede)[https://aydede.org]
+
 ## About
 
 This is a small single page application I built that can be used to organize trades of Magic: The Gathering cards. Magic is a collectible card game and I'll often see people writing down lists of cards and doing math with pen and paper.

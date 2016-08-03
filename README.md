@@ -1,4 +1,4 @@
-By (Derya Aydede)[https://aydede.org]
+By [Derya Aydede](https://aydede.org)
 
 ## About
 

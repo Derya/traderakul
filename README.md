@@ -7,6 +7,5 @@
 
 ## Features to Implement
 
-- user can switch card from one bin to another (in case they added to wrong side)
-- user can edit the price and quantity of cards added to bins
-- 
+user can switch card from one bin to another (in case they added to wrong side)
+user can edit the price and quantity of cards added to bins

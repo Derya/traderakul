@@ -202,8 +202,10 @@ $(document).ready(function() {
       var cardVal = parseFloat(valForm.val());
       if (isValidValue(cardVal)) {
         valFormDiv.removeClass('has-error');
+        valFormDiv.find('.input-group-addon').removeClass('has-error');
       } else {
         valFormDiv.addClass('has-error');
+        valFormDiv.find('.input-group-addon').addClass('has-error');
         valid = false;
       }
 
@@ -211,8 +213,10 @@ $(document).ready(function() {
       var cardQuant = parseFloat(quantForm.val());
       if (isValidQuantity(cardQuant)) {
         quantFormDiv.removeClass('has-error');
+        quantFormDiv.find('.input-group-addon').removeClass('has-error');
       } else {
         quantFormDiv.addClass('has-error');
+        quantFormDiv.find('.input-group-addon').addClass('has-error');
         valid = false;
       }
 
@@ -295,23 +299,29 @@ $(document).ready(function() {
     var valid = true;
 
     var cardVal = parseFloat(cardHolderElement.find('.value-input').val());
+    var valFormEle = cardHolderElement.find('.value-form');
     if (isValidValue(cardVal))
     {
-      cardHolderElement.find('.value-form').removeClass('has-error');
+      valFormEle.removeClass('has-error');
+      valFormEle.find('.input-group-addon').removeClass('has-error');
       card.value = cardVal;
       card.valPrint = Number(cardVal).toFixed(2);
     } else {
-      cardHolderElement.find('.value-form').addClass('has-error');
+      valFormEle.addClass('has-error');
+      valFormEle.find('.input-group-addon').addClass('has-error');
       valid = false;
     }
 
     var cardQuant = parseFloat(cardHolderElement.find('.quantity-input').val());
+    var quantFormEle = cardHolderElement.find('.quantity-form');
     if (isValidQuantity(cardQuant))
     {
-      cardHolderElement.find('.quantity-form').removeClass('has-error');
+      quantFormEle.removeClass('has-error');
+      quantFormEle.find('.input-group-addon').removeClass('has-error');
       card.quantity = cardQuant;
     } else {
-      cardHolderElement.find('.quantity-form').addClass('has-error');
+      quantFormEle.addClass('has-error');
+      quantFormEle.find('.input-group-addon').addClass('has-error');
       valid = false;
     }
 

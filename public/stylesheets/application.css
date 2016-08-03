@@ -1,12 +1,61 @@
-@media (min-width: 768px) {
+body {
+  background-color:#FEF9E7;
 }
 
-/* search bar */
+/* search bar holder*/
 #search-bar-holder {
   max-width:330px;
   margin-bottom: 10px;
   margin-left: auto;
   margin-right: auto;
+}
+
+/* the actual search bar */
+#user-search-input {
+  border-color:#331400;
+}
+
+/* search bar left icon */
+#sizing-addon1 {
+  border-color:#331400;
+  background-color: #F6DDCC;
+  color:#331400;
+}
+
+body button.btn-default {
+  background-color: #FEF9E7;
+  color:#331400;
+  border-color: #331400;
+}
+body button.btn-default:hover, body button.btn-default:active {
+  background-color: #331400!important;
+  color:#FEF9E7!important;
+}
+
+body .cardBin button.btn-default, .card button.btn-default {
+  background-color: #FAD7A0;
+  border-color:#F5B041;
+}
+body .cardBin button.btn-default:hover, .card button.btn-default:hover, 
+body .cardBin button.btn-default:active, .card button.btn-default:active {
+  background-color: whitesmoke!important;
+  border-color:#F5B041!important;
+  color:#331400!important;
+}
+
+body .card .right-holder .btn-group, body .card .right-holder .value-form {
+  margin-top:10px;
+}
+
+
+body .card .input-group-addon:not(.has-error), body .cardBin .input-group-addon:not(.has-error) {
+  background-color:#FAD7A0;
+  border-color:#F5B041;
+  color:#331400;
+}
+
+body .card .input-group-addon.has-error, body .cardBin .input-group-addon.has-error {
+  background-color:#F6DDCC;
 }
 
 /* card search list holder */
@@ -28,6 +77,7 @@
 .cardBin .mana-cost img {
   width:20px;
 }
+
 
 /* user bin stuff */
 .trade-window {
@@ -67,14 +117,14 @@
 }
 .trade-window.left {
   float:left;
-  border-right: 2px solid grey;
+  border-right: 2px solid #331400;
 }
 .trade-window.right {
   float:right;
-  border-left: 2px solid grey;
+  border-left: 2px solid #331400;
 }
 .trade-window-header {
-  border-bottom:4px solid grey;
+  border-bottom:4px solid #331400;
 }
 .trade-window-header > * {
     margin-bottom:5px;
@@ -89,6 +139,11 @@
   max-width:120px;
   margin-top:5px;
 }
+
+.cardBin {
+  background-color: #F6DDCC;
+}
+
 /* end user bin stuff */
 
 /* user input on search form results for quantity and value */
@@ -106,14 +161,23 @@
 #navbarbrand a{
   font-size:34px;
   text-decoration: none;
-  color: #331400;
+  color: #FEF9E7;
 }
-
 #navbarbrand a:hover{
+  color:#FEF9E7;
   text-decoration: none;
-  color: #331400;
+}
+.navbar {
+  background-color: #331400;
 }
 /* end header stuff */
+
+/* card search results stuff */
+.card {
+  background-color: #F6DDCC;
+}
+
+
 
 /* utility classes */
 .nobr {

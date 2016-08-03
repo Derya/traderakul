@@ -1,11 +1,9 @@
+## About
 
-## Getting Started
+This is a small single page application I built that can be used to organize trades of Magic: The Gathering cards. Magic is a collectible card game and I'll often see people writing down lists of cards and doing math with pen and paper.
 
-1. `bundle install`
-2. `bundle exec shotgun`
-3. Visit `http://localhost:3000/` in your browser
+I use the [deckbrew API](https://deckbrew.com/api/) to get official card information. Unfortunately the pricing information from deckbrew is no longer functional, so the user must enter their valuation of cards manually.
 
-## Features to Implement
+## Live site
 
-user can switch card from one bin to another (in case they added to wrong side)
-user can edit the price and quantity of cards added to bins
+There is a personal, low-capacity hosting of Traderakul [here](http://traderakul.herokuapp.com/).

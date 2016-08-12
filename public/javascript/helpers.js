@@ -6,7 +6,7 @@ String.prototype.replaceAll = function(search, replacement) {
 };
 
 String.prototype.stripSpecialChars = function() {
-  var res = this.replaceAll('&nbsp;','')
+  var res = this.replaceAll('&nbsp;','');
   res = res.replace(/(\n|\r|[^ a-zA-Z0-9])/g,'');
   res = res.replace(/ +/,' ');
   return res.trim();
